@@ -1,0 +1,9 @@
+Reference,TravelClass,Flight,TotalPrice
+ABC123,Economy,FlightA,500
+ABC124,Economy,FlightA,450
+DEF456,Business,FlightA,1000
+GHI789,First,FlightA,2000
+JKL012,Economy,FlightA,550
+MNO345,Business,FlightA,1200
+PQR678,Economy,FlightA,600
+STU901,First,FlightA,2200
