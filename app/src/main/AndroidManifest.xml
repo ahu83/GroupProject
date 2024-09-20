@@ -13,6 +13,12 @@
         android:theme="@style/Theme.GroupProject"
         tools:targetApi="31">
         <activity
+            android:name=".PassengerDetails"
+            android:exported="false" />
+        <activity
+            android:name=".SelectReturnFlight"
+            android:exported="false" />
+        <activity
             android:name=".NoFlights"
             android:exported="false" />
         <activity

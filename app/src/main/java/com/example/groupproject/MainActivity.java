@@ -9,6 +9,8 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -38,10 +40,15 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Flight> flights;
     public static ArrayList<Airport> airports;
 
-    EditText depart, arrival, pax, traveldate;
+    EditText depart, arrival, pax, traveldate, returndate;
     Spinner travelclass;
     String selectedclass = "Economy";
     Button searchbutton;
+    CheckBox returnstatus;
+    TextView returntext;
+    Boolean isreturn;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +66,28 @@ public class MainActivity extends AppCompatActivity {
         travelclass = (Spinner)findViewById(R.id.spinner);
         traveldate = findViewById(R.id.travelDate);
         searchbutton = findViewById(R.id.searchButton);
+        returndate = findViewById(R.id.arrDate);
+        returnstatus = findViewById(R.id.returnBox);
+        returntext = findViewById(R.id.textView5);
+
+        returndate.setVisibility(View.GONE);
+        returntext.setVisibility(View.GONE);
+        isreturn = false;
+
+        returnstatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                if (isChecked == true){
+                    returndate.setVisibility(View.VISIBLE);
+                    returntext.setVisibility(View.VISIBLE);
+                    isreturn = true;
+                } else {
+                    returndate.setVisibility(View.GONE);
+                    returntext.setVisibility(View.GONE);
+                    isreturn = false;
+                }
+            }
+        });
 
         String[] travelclasses = {"Economy", "Business", "First"};
         ArrayAdapter<String> classadapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, travelclasses);
@@ -84,16 +113,34 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    ArrayList<String> match = search();
-                    Intent i = new Intent(MainActivity.this, searchFlight.class);
-                    i.putStringArrayListExtra("match", match);
-                    startActivity(i);
-                }catch(Exception e){
-                    Intent intent = new Intent(MainActivity.this, NoFlights.class);
-                    startActivity(intent);
-                }
+                if (isreturn == false) {
+                    try {
+                        ArrayList<String> match = search();
+                        Intent i = new Intent(MainActivity.this, searchFlight.class);
+                        i.putStringArrayListExtra("match", match);
+                        i.putExtra("isreturn", isreturn);
+                        startActivity(i);
+                    } catch (Exception e) {
+                        Intent intent = new Intent(MainActivity.this, NoFlights.class);
+                        startActivity(intent);
+                    }
+                } else {
+                    try {
+                        ArrayList<String> match = search();
+                        ArrayList<String> returnmatch = searchReturn();
+                        Intent i = new Intent(MainActivity.this, searchFlight.class);
+                        int passengers = Integer.parseInt(String.valueOf(pax.getText()));
 
+                        i.putExtra("isreturn", isreturn);
+                        i.putStringArrayListExtra("match", match);
+                        i.putStringArrayListExtra("returnmatch", returnmatch);
+                        i.putExtra("pax", passengers);
+                        startActivity(i);
+                    } catch (Exception e) {
+                        Intent intent = new Intent(MainActivity.this, NoFlights.class);
+                        startActivity(intent);
+                    }
+                }
 
             }
         };
@@ -419,6 +466,32 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return matches;
+    }
+
+    public ArrayList<String> searchReturn(){
+        ArrayList<String> returnmatches = new ArrayList<>();
+        int passengers = Integer.parseInt(String.valueOf(pax.getText()));
+
+        for (Flight flight : flights){
+            if ((arrival.getText().toString().equals(flight.getDeparture())) && (depart.getText().toString().equals(flight.getArrival()))
+                    && (returndate.getText().toString().equals(flight.getDepartureDate()))){
+                if (selectedclass.equals("Economy")){
+                    if(passengers <= flight.getEconomyavail()){
+                        returnmatches.add(flight.getFlightId());
+                    }
+                }else if (selectedclass.equals("Business")){
+                    if(passengers <= flight.getBusinessavail()){
+                        returnmatches.add(flight.getFlightId());
+                    }
+                }else if (selectedclass.equals("First")){
+                    if(passengers <= flight.getFirstavail()){
+                        returnmatches.add(flight.getFlightId());
+                    }
+                }
+            }
+        }
+
+        return returnmatches;
     }
 
 }

@@ -2,6 +2,8 @@ package com.example.groupproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -25,11 +27,23 @@ public class searchFlight extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        displayFlight = findViewById(R.id.displayFlight);
-        Intent intent = getIntent();
 
+        //find the listview and assign a variable
+        displayFlight = findViewById(R.id.displayFlight);
+
+        //get the variables passed from the previous view
+        Intent intent = getIntent();
         ArrayList<String> flightlist = intent.getStringArrayListExtra("match") ;
+        boolean isreturn = intent.getBooleanExtra("isreturn", false);
+        int pax = intent.getIntExtra("pax", 0);
+        if (isreturn == true){
+            String returnmatch = intent.getStringExtra("returnmatch");
+        }
+
+
         ArrayList<String> displaystring = new ArrayList<>();
+
+        //get the flight object using the matched flight ids
         for (String flightid : flightlist){
             for (Flight flight : MainActivity.flights){
                 if (flightid.equals(flight.getFlightId())){
@@ -38,8 +52,19 @@ public class searchFlight extends AppCompatActivity {
             }
         }
 
+
+        //display the flights
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, displaystring);
         displayFlight.setAdapter(adapter);
+
+        displayFlight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
+                String departFlight = flightlist.get(position);
+
+
+            }
+        });
 
     }
 }
