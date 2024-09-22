@@ -1,5 +1,8 @@
 package com.example.groupproject;
-public class Passenger {
+
+import java.io.Serializable;
+
+public class Passenger implements Serializable {
     private String firstName;
     private String lastName;
     private String gender;
@@ -33,6 +36,26 @@ public class Passenger {
 
     public String getNationality() {
         return nationality;
+    }
+
+    public void setDOB(String DOB) {
+        this.DOB = DOB;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     @Override

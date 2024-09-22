@@ -1,7 +1,8 @@
 package com.example.groupproject;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Booking {
+public class Booking implements Serializable {
     private String reference;
     private ArrayList<Passenger> passengers = new ArrayList<Passenger>();
 
@@ -13,6 +14,14 @@ public class Booking {
     Booking(String reference, String travelclass, String flight, int totalprice){
 
         this.reference = reference;
+
+        this.travelclass = travelclass;
+        this.flight = flight;
+        this.totalprice = totalprice;
+    }
+    Booking(String travelclass, String flight, int totalprice){
+
+        this.reference = "";
 
         this.travelclass = travelclass;
         this.flight = flight;
@@ -43,6 +52,12 @@ public class Booking {
 
     public void addPassenger(Passenger newpassenger){
         passengers.add(newpassenger);
+    }
+    public void addPassenger(ArrayList<Passenger> newpassenger){
+        this.passengers = newpassenger;
+    }
+    public void setReference(String reference){
+        this.reference = reference;
     }
 
     @Override

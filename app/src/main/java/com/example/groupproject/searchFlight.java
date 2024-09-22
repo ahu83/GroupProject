@@ -36,9 +36,10 @@ public class searchFlight extends AppCompatActivity {
         ArrayList<String> flightlist = intent.getStringArrayListExtra("match") ;
         boolean isreturn = intent.getBooleanExtra("isreturn", false);
         int pax = intent.getIntExtra("pax", 0);
-        if (isreturn == true){
-            String returnmatch = intent.getStringExtra("returnmatch");
-        }
+        String travelclass = intent.getStringExtra("travelclass");
+
+        ArrayList<String> returnmatch = intent.getStringArrayListExtra("returnmatch") ;
+
 
 
         ArrayList<String> displaystring = new ArrayList<>();
@@ -61,6 +62,26 @@ public class searchFlight extends AppCompatActivity {
 
             public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
                 String departFlight = flightlist.get(position);
+                if(isreturn == true){
+                    Intent i = new Intent(searchFlight.this, SelectReturnFlight.class);
+                    i.putExtra("isreturn", isreturn);
+                    i.putExtra("departflight", departFlight);
+                    i.putStringArrayListExtra("match", flightlist);
+                    i.putStringArrayListExtra("returnmatch", returnmatch);
+                    i.putExtra("pax", pax);
+                    i.putExtra("travelclass", travelclass);
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(searchFlight.this, PassengerDetails.class);
+                    String returnFlight = "";
+                    i.putExtra("returnflight", returnFlight);
+                    i.putExtra("isreturn", isreturn);
+                    i.putExtra("departflight", departFlight);
+                    i.putStringArrayListExtra("match", flightlist);
+                    i.putExtra("pax", pax);
+                    i.putExtra("travelclass", travelclass);
+                    startActivity(i);
+                }
 
 
             }

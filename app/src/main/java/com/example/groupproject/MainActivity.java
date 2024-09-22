@@ -113,12 +113,18 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int passengers = Integer.parseInt(String.valueOf(pax.getText()));
+
                 if (isreturn == false) {
                     try {
                         ArrayList<String> match = search();
+                        ArrayList<String> returnmatch = new ArrayList<>();
                         Intent i = new Intent(MainActivity.this, searchFlight.class);
                         i.putStringArrayListExtra("match", match);
+                        i.putStringArrayListExtra("returnmatch", returnmatch);
                         i.putExtra("isreturn", isreturn);
+                        i.putExtra("pax", passengers);
+                        i.putExtra("travelclass", selectedclass);
                         startActivity(i);
                     } catch (Exception e) {
                         Intent intent = new Intent(MainActivity.this, NoFlights.class);
@@ -129,8 +135,7 @@ public class MainActivity extends AppCompatActivity {
                         ArrayList<String> match = search();
                         ArrayList<String> returnmatch = searchReturn();
                         Intent i = new Intent(MainActivity.this, searchFlight.class);
-                        int passengers = Integer.parseInt(String.valueOf(pax.getText()));
-
+                        i.putExtra("travelclass", selectedclass);
                         i.putExtra("isreturn", isreturn);
                         i.putStringArrayListExtra("match", match);
                         i.putStringArrayListExtra("returnmatch", returnmatch);

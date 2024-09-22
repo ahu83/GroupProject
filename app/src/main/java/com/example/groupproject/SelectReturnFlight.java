@@ -1,6 +1,11 @@
 package com.example.groupproject;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,8 +13,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class SelectReturnFlight extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class SelectReturnFlight extends AppCompatActivity {
+    ListView displayFlight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,5 +27,57 @@ public class SelectReturnFlight extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //find the listview and assign a variable
+        displayFlight = findViewById(R.id.displayReturnFlights);
+
+        //get the variables passed from the previous view
+        Intent intent = getIntent();
+        ArrayList<String> flightlist = intent.getStringArrayListExtra("match") ;
+        boolean isreturn = intent.getBooleanExtra("isreturn", true);
+        int pax = intent.getIntExtra("pax", 0);
+        String departFlight = intent.getStringExtra("departflight");
+        String travelclass = intent.getStringExtra("travelclass");
+
+        ArrayList<String> returnmatch = intent.getStringArrayListExtra("returnmatch") ;
+
+
+
+        ArrayList<String> displaystring = new ArrayList<>();
+
+        //get the flight object using the matched flight ids
+        for (String flightid : returnmatch){
+            for (Flight flight : MainActivity.flights){
+                if (flightid.equals(flight.getFlightId())){
+                    displaystring.add(flight.toString());
+                }
+            }
+        }
+
+
+        //display the flights
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, displaystring);
+        displayFlight.setAdapter(adapter);
+
+        displayFlight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> adapter, View v, int position, long id) {
+                String returnFlight = returnmatch.get(position);
+                Intent i = new Intent(SelectReturnFlight.this, PassengerDetails.class);
+                i.putExtra("isreturn", isreturn);
+                i.putExtra("departflight", departFlight);
+                i.putExtra("returnflight", returnFlight);
+                i.putStringArrayListExtra("match", flightlist);
+                i.putStringArrayListExtra("returnmatch", returnmatch);
+                i.putExtra("pax", pax);
+                i.putExtra("travelclass", travelclass);
+                startActivity(i);
+                System.out.println(departFlight);
+
+
+            }
+        });
     }
+
+
+
 }
