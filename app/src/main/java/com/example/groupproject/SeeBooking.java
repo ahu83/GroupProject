@@ -17,9 +17,48 @@ public class SeeBooking extends AppCompatActivity {
     TextView depart, returnflight, booking, enterdate;
     Button changeR, changeD, changeReturn, changeDeparture;
     Booking seebooking;
-    String departflightid, returnflightid;
+    String departflightid, returnflightid, reference;
     EditText date;
     boolean isreturn;
+    View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            if (v.getId() == R.id.changeD){
+                changeDeparture.setVisibility(View.VISIBLE);
+                date.setVisibility(View.VISIBLE);
+                enterdate.setVisibility(View.VISIBLE);
+                changeReturn.setVisibility(View.GONE);
+
+
+            } else if (v.getId() == R.id.changeR){
+                changeDeparture.setVisibility(View.VISIBLE);
+                date.setVisibility(View.VISIBLE);
+                enterdate.setVisibility(View.VISIBLE);
+                changeReturn.setVisibility(View.GONE);
+            } else if (v.getId() == R.id.changeReturn){
+                Intent i = new Intent(SeeBooking.this, ChangeBooking.class);
+                i.putExtra("reference", reference);
+                i.putExtra("flightid", returnflightid);
+                boolean changereturn = true;
+                i.putExtra("changereturn", changereturn);
+                startActivity(i);
+
+
+
+            } else if (v.getId() == R.id.changeDepart){
+                Intent i = new Intent(SeeBooking.this, ChangeBooking.class);
+                i.putExtra("reference", reference);
+                i.putExtra("flightid", departflightid);
+                boolean changereturn = false;
+                i.putExtra("changereturn", changereturn);
+                startActivity(i);
+
+            }
+
+
+        }
+    };
 
 
     @Override
@@ -53,7 +92,7 @@ public class SeeBooking extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        String reference = intent.getStringExtra("reference");
+        reference = intent.getStringExtra("reference");
 
 
         for (Booking booking : MainActivity.bookings){
