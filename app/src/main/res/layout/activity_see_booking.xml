@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SeeBooking">
+
+    <TextView
+        android:id="@+id/seebookingdetails"
+        android:layout_width="407dp"
+        android:layout_height="119dp"
+        android:layout_marginTop="62dp"
+        android:layout_marginBottom="64dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/changeD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/seeDepartflight"
+        android:layout_width="0dp"
+        android:layout_height="107dp"
+        android:layout_marginTop="153dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="155dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/seeReturnFlight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/changeD"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/seebookingdetails" />
+
+    <TextView
+        android:id="@+id/seeReturnFlight"
+        android:layout_width="0dp"
+        android:layout_height="109dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="69dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/changeDate"
+        app:layout_constraintEnd_toStartOf="@+id/changeReturn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changeD" />
+
+    <Button
+        android:id="@+id/changeD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="245dp"
+        android:layout_marginEnd="9dp"
+        android:text="change"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/seeDepartflight"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/changeR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="7dp"
+        android:layout_marginBottom="295dp"
+        android:text="change"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/changeDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:layout_marginBottom="4dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintBottom_toBottomOf="@+id/changeDepart"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/changeReturn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="22dp"
+        android:text="Search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/seeReturnFlight"
+        app:layout_constraintTop_toBottomOf="@+id/changeR" />
+
+    <Button
+        android:id="@+id/changeDepart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="Search"
+        app:layout_constraintStart_toStartOf="@+id/changeReturn"
+        app:layout_constraintTop_toBottomOf="@+id/changeReturn" />
+
+    <TextView
+        android:id="@+id/enterthedatetext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="please enter the new date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seeReturnFlight" />
+</androidx.constraintlayout.widget.ConstraintLayout>
