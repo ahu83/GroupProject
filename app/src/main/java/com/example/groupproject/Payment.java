@@ -28,6 +28,9 @@ public class Payment extends AppCompatActivity {
             return insets;
         });
 
+        System.out.println(MainActivity.bookings);
+
+
         bookingdetails = findViewById(R.id.bookingDetails);
         pay = findViewById(R.id.paybutton);
 
@@ -44,8 +47,27 @@ public class Payment extends AppCompatActivity {
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean exists = true;
+                String reference = "";
+                while (exists == true) {
+                    reference = referenceGenerator();
+                    exists = false;
+                    for (Booking ticket : MainActivity.bookings) {
+                        if (reference.equals(ticket.getReference())){
+                            exists = true;
+                        }
+                    }
 
 
+                }
+                booking.setReference(reference);
+                MainActivity.bookings.add(booking);
+
+
+                exists = true;
+                Intent i = new Intent(Payment.this, paymentComplete.class);
+                i.putExtra("reference", reference);
+                startActivity(i);
             }
         });
 
@@ -57,7 +79,7 @@ public class Payment extends AppCompatActivity {
         String randomcharacters = "1234567890QWERTYUIOPASDFGHJKLZXCVBNM";
         Random rand = new Random();
         int i;
-        for (i = 0; i < 9; i++){
+        for (i = 0; i < 6; i++){
             reference = reference + randomcharacters.charAt(rand.nextInt(36));
         }
         return reference;

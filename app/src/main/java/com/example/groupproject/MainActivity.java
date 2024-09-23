@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -28,10 +29,14 @@ import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,8 +50,9 @@ public class MainActivity extends AppCompatActivity {
     String selectedclass = "Economy";
     Button searchbutton;
     CheckBox returnstatus;
-    TextView returntext;
+    TextView returntext, managebooking;
     Boolean isreturn;
+    public static boolean started;
 
 
 
@@ -69,10 +75,19 @@ public class MainActivity extends AppCompatActivity {
         returndate = findViewById(R.id.arrDate);
         returnstatus = findViewById(R.id.returnBox);
         returntext = findViewById(R.id.textView5);
+        managebooking = findViewById(R.id.manageBooking);
 
         returndate.setVisibility(View.GONE);
         returntext.setVisibility(View.GONE);
         isreturn = false;
+
+        managebooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, ManageBooking.class);
+                startActivity(i);
+            }
+        });
 
         returnstatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -155,19 +170,29 @@ public class MainActivity extends AppCompatActivity {
 
         //import all the data
         try {
-            airports = importAirports(this, R.raw.airports);
-            planes = importPlanes(this, R.raw.planes);
-            flights = importFlights(this, R.raw.flights, planes);
-            bookings = importBookings(this, R.raw.bookings);
-            importReturnBookings(this, R.raw.returns, bookings);
-            importPassengers(this, R.raw.passengers, bookings);
-            addBookingToFlight(bookings, flights);
+            if(started == false) {
+                airports = importAirports(this, R.raw.airports);
+                planes = importPlanes(this, R.raw.planes);
+                flights = importFlights(this, R.raw.flights, planes);
+                bookings = importBookings(this, R.raw.bookings);
+                importReturnBookings(this, R.raw.returns, bookings);
+                importPassengers(this, R.raw.passengers, bookings);
+                addBookingToFlight(bookings, flights);
+                started = true;
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
 
 
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        if (isFinishing()) {
+            started = false;
+        }
     }
 
     public static void addBookingToFlight(ArrayList<Booking> bookings, ArrayList<Flight> flights){
@@ -337,12 +362,17 @@ public class MainActivity extends AppCompatActivity {
         return flights;
     }
 
-    public static void exportBookings(String bookingsFilePath, ArrayList<Booking> bookings) throws IOException {
-        try (FileWriter writer = new FileWriter(bookingsFilePath);
+    public static void exportBookings(Context context) {
+
+        Resources resources = context.getResources();
+
+        File csvFile = new File(context.getExternalFilesDir(null), "bookings.csv");
+
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFile)));
              CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader("Reference", "TravelClass", "Flight", "TotalPrice"))) {
 
             for (Booking booking : bookings) {
-                if ( !(booking instanceof Return)) {
+                if (!(booking instanceof Return)) {
                     printer.printRecord(
                             booking.getReference(),
                             booking.getTravelclass(),
@@ -351,11 +381,15 @@ public class MainActivity extends AppCompatActivity {
                     );
                 }
             }
+        } catch (IOException e) {
+            Log.e("ExportBookings", "Error exporting bookings", e);
         }
     }
 
-    public static void exportReturns(String returnsFilePath, ArrayList<Booking> bookings) throws IOException {
-        try (FileWriter writer = new FileWriter(returnsFilePath);
+    public static void exportReturns(Context context) {
+        File csvFile = new File(context.getExternalFilesDir(null), "returns.csv");
+
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFile)));
              CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader("Reference", "TravelClass", "Flight", "TotalPrice", "ReturnFlight"))) {
 
             for (Booking booking : bookings) {
@@ -370,10 +404,14 @@ public class MainActivity extends AppCompatActivity {
                     );
                 }
             }
+        } catch (IOException e) {
+            Log.e("ExportReturns", "Error exporting returns", e);
         }
     }
-    public static void exportPassengers(String passengersFilePath, ArrayList<Booking> bookings) throws IOException {
-        try (FileWriter writer = new FileWriter(passengersFilePath);
+    public static void exportPassengers(Context context) {
+        File csvFile = new File(context.getExternalFilesDir(null), "passengers.csv");
+
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFile)));
              CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader("BookingReference", "FirstName", "LastName", "Gender", "DOB", "Nationality"))) {
 
             for (Booking booking : bookings) {
@@ -388,6 +426,8 @@ public class MainActivity extends AppCompatActivity {
                     );
                 }
             }
+        } catch (IOException e) {
+            Log.e("ExportPassengers", "Error exporting passengers", e);
         }
     }
 
