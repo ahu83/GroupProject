@@ -79,6 +79,9 @@ public class Booking implements Serializable {
                 ", totalprice=" + totalprice +
                 '}';
     }
+    public void addMeal(int passid, int mealid){
+        passengers.get(passid).setMeal(mealid);
+    }
 
 
 }

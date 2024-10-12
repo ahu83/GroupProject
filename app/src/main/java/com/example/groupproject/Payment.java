@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class Payment extends AppCompatActivity {
     TextView bookingdetails;
-    Button pay;
+    Button pay, bookmeal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +33,7 @@ public class Payment extends AppCompatActivity {
 
         bookingdetails = findViewById(R.id.bookingDetails);
         pay = findViewById(R.id.paybutton);
+        bookmeal = findViewById(R.id.addmeal);
 
         Intent intent = getIntent();
         Booking booking;
@@ -70,6 +71,16 @@ public class Payment extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        bookmeal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Payment.this, BookMeal.class);
+                i.putExtra("booking", booking);
+                i.putExtra("isreturn", isreturn);
+                startActivity(i);
+            }
+        });
+
 
 
     }

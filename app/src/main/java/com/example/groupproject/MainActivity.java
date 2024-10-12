@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Plane> planes;
     public static ArrayList<Flight> flights;
     public static ArrayList<Airport> airports;
+    public static ArrayList<Meal> meals = new ArrayList<>();
 
     EditText depart, arrival, pax, traveldate, returndate;
     Spinner travelclass;
@@ -66,6 +67,24 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //create meals
+        Meal meal1 = new Meal(1, "Halal", 0, 20);
+        Meal meal2 = new Meal(2, "Vegan", 0, 20);
+        Meal meal3 = new Meal(3, "Vegetarian", 0, 20);
+
+        Meal meal0 = new Meal(0, "No meal", 0, 0);
+
+        meals.add(meal0);
+        meals.add(meal1);
+        meals.add(meal2);
+        meals.add(meal3);
+
+
+
+
+
+
+
         depart = findViewById(R.id.departAirport);
         arrival = findViewById(R.id.arrivalAirport);
         pax = findViewById(R.id.pax);

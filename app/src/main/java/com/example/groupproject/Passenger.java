@@ -8,6 +8,7 @@ public class Passenger implements Serializable {
     private String gender;
     private String DOB;
     private String nationality;
+    private int meal = 0;
 
     Passenger(String firstName, String lastName, String gender, String DOB, String nationality){
 
@@ -38,6 +39,14 @@ public class Passenger implements Serializable {
         return nationality;
     }
 
+    public void setMeal(int meal) {
+        this.meal = meal;
+    }
+
+    public int getMeal() {
+        return meal;
+    }
+
     public void setDOB(String DOB) {
         this.DOB = DOB;
     }
@@ -66,6 +75,7 @@ public class Passenger implements Serializable {
                 ", gender='" + gender + '\'' +
                 ", DOB='" + DOB + '\'' +
                 ", nationality='" + nationality + '\'' +
+                ", meal='" + meal + '\'' +
                 '}';
     }
 }
