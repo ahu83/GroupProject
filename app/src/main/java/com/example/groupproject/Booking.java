@@ -8,7 +8,7 @@ public class Booking implements Serializable {
 
     private String travelclass;
     private String flight;
-    private final int totalprice;
+    private  int totalprice;
 
 
     Booking(String reference, String travelclass, String flight, int totalprice){
@@ -32,7 +32,12 @@ public class Booking implements Serializable {
         return passengers;
     }
 
-
+    public void setTotalprice(int totalprice) {
+        this.totalprice = totalprice;
+    }
+    public void changeTotalprice(int totalprice) {
+        this.totalprice = this.totalprice +  totalprice;
+    }
 
     public int getTotalprice() {
         return totalprice;
@@ -58,6 +63,10 @@ public class Booking implements Serializable {
     }
     public void setReference(String reference){
         this.reference = reference;
+    }
+
+    public void setFlight(String flight) {
+        this.flight = flight;
     }
 
     @Override

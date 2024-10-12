@@ -182,4 +182,11 @@ public class Flight implements Serializable {
                 ", arrivalDate='" + arrivalDate + '\'' +
                 '}';
     }
+
+    public String toStringdisplay(){
+        return String.format("%s                             %s\n" +
+                             "%s --------------------------> %s\n" +
+                             "duration: %s\n" +
+                             "depart:%s                arrival:%s", flightId, departureDate, departure, arrival, duration, departureTime, arrivalTime);
+    }
 }

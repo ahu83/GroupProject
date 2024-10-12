@@ -72,31 +72,31 @@
         android:id="@+id/changeDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginBottom="68dp"
         android:ems="10"
         android:inputType="date"
-        app:layout_constraintBottom_toBottomOf="@+id/changeDepart"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/changeReturn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="22dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="36dp"
         android:text="Search"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/seeReturnFlight"
         app:layout_constraintTop_toBottomOf="@+id/changeR" />
 
     <Button
         android:id="@+id/changeDepart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginEnd="24dp"
         android:text="Search"
-        app:layout_constraintStart_toStartOf="@+id/changeReturn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/changeReturn" />
 
     <TextView

@@ -32,12 +32,15 @@ public class SeeBooking extends AppCompatActivity {
 
 
             } else if (v.getId() == R.id.changeR){
-                changeDeparture.setVisibility(View.VISIBLE);
+                changeDeparture.setVisibility(View.GONE);
                 date.setVisibility(View.VISIBLE);
                 enterdate.setVisibility(View.VISIBLE);
-                changeReturn.setVisibility(View.GONE);
+                changeReturn.setVisibility(View.VISIBLE);
             } else if (v.getId() == R.id.changeReturn){
+                String changedate = date.getText().toString();
+
                 Intent i = new Intent(SeeBooking.this, ChangeBooking.class);
+                i.putExtra("changedate", changedate);
                 i.putExtra("reference", reference);
                 i.putExtra("flightid", returnflightid);
                 boolean changereturn = true;
@@ -47,8 +50,10 @@ public class SeeBooking extends AppCompatActivity {
 
 
             } else if (v.getId() == R.id.changeDepart){
+                String changedate = date.getText().toString();
                 Intent i = new Intent(SeeBooking.this, ChangeBooking.class);
                 i.putExtra("reference", reference);
+                i.putExtra("changedate", changedate);
                 i.putExtra("flightid", departflightid);
                 boolean changereturn = false;
                 i.putExtra("changereturn", changereturn);
@@ -83,12 +88,16 @@ public class SeeBooking extends AppCompatActivity {
 
 
         enterdate.setVisibility(View.GONE);
-        returnflight.setVisibility(View.GONE);
-        changeR.setVisibility(View.GONE);
+        returnflight.setVisibility(View.INVISIBLE);
+        changeR.setVisibility(View.INVISIBLE);
+        date.setVisibility(View.INVISIBLE);
         changeReturn.setVisibility(View.GONE);
         changeDeparture.setVisibility(View.GONE);
 
-
+        changeR.setOnClickListener(clickListener);
+        changeD.setOnClickListener(clickListener);
+        changeReturn.setOnClickListener(clickListener);
+        changeDeparture.setOnClickListener(clickListener);
 
 
         Intent intent = getIntent();
@@ -117,9 +126,11 @@ public class SeeBooking extends AppCompatActivity {
                 departflightid = flight.getFlightId();
             }
             if(isreturn == true){
-                if (seebooking.getFlight().equals(flight.getFlightId())){
-                    returnflight.setText(flight.toString());
-                    returnflightid = flight.getFlightId();
+                if(seebooking instanceof Return) {
+                    if (((Return) seebooking).getReturnflight().equals(flight.getFlightId())) {
+                        returnflight.setText(flight.toString());
+                        returnflightid = flight.getFlightId();
+                    }
                 }
             }
         }

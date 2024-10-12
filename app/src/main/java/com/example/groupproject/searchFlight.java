@@ -48,7 +48,7 @@ public class searchFlight extends AppCompatActivity {
         for (String flightid : flightlist){
             for (Flight flight : MainActivity.flights){
                 if (flightid.equals(flight.getFlightId())){
-                    displaystring.add(flight.toString());
+                    displaystring.add(flight.toStringdisplay());
                 }
             }
         }

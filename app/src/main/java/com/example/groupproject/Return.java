@@ -26,4 +26,8 @@ public class Return extends Booking implements Serializable
                 "returnflight='" + returnflight + '\'' +
                 '}';
     }
+
+    public void setReturnflight(String returnflight) {
+        this.returnflight = returnflight;
+    }
 }

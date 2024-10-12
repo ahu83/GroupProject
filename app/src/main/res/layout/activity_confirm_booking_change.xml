@@ -5,35 +5,34 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Payment">
+    tools:context=".ConfirmBookingChange">
 
     <TextView
-        android:id="@+id/bookingDetails"
+        android:id="@+id/newflightdetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="94dp" />
 
-    <Button
-        android:id="@+id/paybutton"
+    <TextView
+        android:id="@+id/pricechange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="228dp"
+        android:layout_marginTop="80dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/newflightdetails"
+        app:layout_constraintTop_toBottomOf="@+id/newflightdetails" />
+
+    <Button
+        android:id="@+id/newpay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="356dp"
         android:text="Pay"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/addmeal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:text="Book a Meal"
-        app:layout_constraintBottom_toTopOf="@+id/paybutton"
-        app:layout_constraintEnd_toEndOf="@+id/paybutton"
-        app:layout_constraintStart_toStartOf="@+id/paybutton" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pricechange" />
 </androidx.constraintlayout.widget.ConstraintLayout>
